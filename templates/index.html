@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Enterprise AI RAG Dashboard
+    </title>
+
+    <style>
+
+        body {
+
+            font-family: Arial;
+
+            margin: 30px;
+
+            background: #f4f4f4;
+        }
+
+        .container {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+
+            padding: 10px;
+
+            width: 70%;
+
+            margin-top: 10px;
+        }
+
+        button {
+
+            padding: 10px 20px;
+
+            margin-top: 10px;
+
+            cursor: pointer;
+        }
+
+        .answer-box {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #efefef;
+
+            border-radius: 5px;
+        }
+
+        .title {
+
+            color: #333;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1 class="title">
+            Enterprise AI RAG Dashboard
+        </h1>
+
+        <p>
+            Flask + RequireJS + LangChain + ChromaDB
+        </p>
+
+        <hr>
+
+        <h2>
+            Upload PDF
+        </h2>
+
+        <input
+            type="file"
+            id="pdfFile"
+        >
+
+        <br>
+
+        <button id="uploadBtn">
+            Upload PDF
+        </button>
+
+        <hr>
+
+        <h2>
+            Ask Questions From PDF
+        </h2>
+
+        <input
+            type="text"
+            id="question"
+            placeholder="Ask question from uploaded PDF"
+        >
+
+        <br>
+
+        <button id="askBtn">
+            Ask AI
+        </button>
+
+        <div class="answer-box">
+
+            <h3>
+                AI Response
+            </h3>
+
+            <p id="answer">
+                Waiting for question...
+            </p>
+
+        </div>
+
+        <hr>
+
+        <button id="btn">
+            Test RequireJS
+        </button>
+
+    </div>
+
+    <!-- RequireJS -->
+
+    <script
+        data-main="{{ url_for('static', filename='js/main') }}"
+        src="{{ url_for('static', filename='js/lib/require.min.js') }}">
+    </script>
+
+</body>
+
+</html>
