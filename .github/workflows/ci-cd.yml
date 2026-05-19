@@ -1,0 +1,169 @@
+name: Enterprise RAG CI/CD Pipeline
+
+on:
+
+  push:
+
+    branches:
+      - main
+
+  pull_request:
+
+    branches:
+      - main
+
+
+jobs:
+
+  build-test-deploy:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      # =====================================
+      # Checkout Repository
+      # =====================================
+
+      - name: Checkout Repository
+
+        uses: actions/checkout@v4
+
+
+      # =====================================
+      # Setup Python
+      # =====================================
+
+      - name: Setup Python
+
+        uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.11"
+
+
+      # =====================================
+      # Upgrade pip
+      # =====================================
+
+      - name: Upgrade pip
+
+        run: |
+
+          python -m pip install --upgrade pip
+
+
+      # =====================================
+      # Install Dependencies
+      # =====================================
+
+      - name: Install Requirements
+
+        run: |
+
+          pip install -r requirements.txt
+
+
+      # =====================================
+      # Install Additional Dev Tools
+      # =====================================
+
+      - name: Install Dev Dependencies
+
+        run: |
+
+          pip install flake8 pytest
+
+
+      # =====================================
+      # Python Syntax Check
+      # =====================================
+
+      - name: Python Compile Validation
+
+        run: |
+
+          python -m py_compile app.py
+
+
+      # =====================================
+      # Recursive Compile Check
+      # =====================================
+
+      - name: Compile Entire Project
+
+        run: |
+
+          python -m compileall .
+
+
+      # =====================================
+      # Lint Validation
+      # =====================================
+
+      - name: Run Flake8 Linting
+
+        run: |
+
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+
+      # =====================================
+      # Validate AI Stack Imports
+      # =====================================
+
+      - name: Validate LangChain Imports
+
+        run: |
+
+          python -c "
+          from langchain_ollama import ChatOllama;
+          from langchain_ollama import OllamaEmbeddings;
+          from langchain_community.vectorstores import Chroma;
+          from langchain_core.prompts import ChatPromptTemplate;
+          print('AI Stack Successfully Loaded');
+          "
+
+
+      # =====================================
+      # Validate Flask Import
+      # =====================================
+
+      - name: Validate Flask Application
+
+        run: |
+
+          python -c "
+          from app import app;
+          print('Flask App Loaded Successfully');
+          "
+
+
+      # =====================================
+      # Validate RequireJS Static Files
+      # =====================================
+
+      - name: Validate Frontend Files
+
+        run: |
+
+          test -f static/js/app.js
+
+          test -f static/js/main.js
+
+          test -f static/js/api.js
+
+          echo 'Frontend Files Exist'
+
+
+      # =====================================
+      # Success Message
+      # =====================================
+
+      - name: Pipeline Success
+
+        run: |
+
+          echo 'Enterprise RAG Build Passed Successfully'
