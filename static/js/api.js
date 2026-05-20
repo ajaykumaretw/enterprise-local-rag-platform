@@ -1,7 +1,7 @@
 define(function () {
 
     async function getWelcomeMessage() {
-
+        
         const response =
             await fetch("/api/dashboard");
 

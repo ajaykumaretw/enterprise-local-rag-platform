@@ -219,12 +219,7 @@ def skills():
 # Upload PDF API
 # ======================================
 
-@app.route(
-
-    "/api/upload",
-
-    methods=["POST"]
-)
+@app.route("/api/upload",methods=["POST"])
 def upload_pdf():
 
     if "file" not in request.files:
@@ -297,13 +292,7 @@ def upload_pdf():
 # Ask Question API
 # ======================================
 
-@app.route(
-
-    "/api/ask",
-
-    methods=["POST"]
-
-)
+@app.route("/api/ask",methods=["POST"])
 def ask_question():
 
     try:

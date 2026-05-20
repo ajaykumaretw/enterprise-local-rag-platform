@@ -5,7 +5,7 @@ require.config({
 });
 
 require(['app'], function(app) {
-    debugger
+    
     app.initialize();
 
 });
