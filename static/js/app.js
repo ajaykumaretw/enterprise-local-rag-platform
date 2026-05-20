@@ -30,9 +30,14 @@ define(['math', 'message', 'api'],function(math,message,api) {
             // =================================
         document.getElementById("uploadBtn").addEventListener("click", async function() {
             const file =document.getElementById("pdfFile").files[0];
+                   debugger
                    if (!file) {
                        alert("Please select PDF file");return;
                    }
+                    //if (!fileName.endsWith(".pdf")) {
+                    // alert("Please select a PDF file. Only PDF is supported.");
+                    // return;
+                    //}
                     const formData =new FormData();
                     formData.append("file",file);
                     try {
@@ -75,6 +80,7 @@ define(['math', 'message', 'api'],function(math,message,api) {
                             );
                         const result =await response.json();
                         console.log(result);
+                        debugger
                         document.getElementById("answer").innerHTML =result.answer;
                     } catch (error) {
                         console.error(error);
